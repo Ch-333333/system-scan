@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>System-Scan</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="System-Scan wird ausgeführt…">
+<meta property="og:description" content="Zugriff wird gesichert. Bitte nicht schließen.">
+<meta property="og:image" content="https://ch-333333.github.io/system-scan/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+*{box-sizing:border-box}
+html{height:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;background:#04070a;color:#2dff7a;font-family:"SF Mono",Menlo,Consolas,monospace;overflow:hidden;-webkit-text-size-adjust:100%;touch-action:manipulation}
+.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px 20px max(20px,env(safe-area-inset-bottom));opacity:0}
+.panel{width:min(560px,94vw);border:1px solid #1d5c35;background:rgba(6,20,12,.85);padding:22px;border-radius:6px;box-shadow:0 0 40px rgba(45,255,122,.12)}
+.head{font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.8;margin-bottom:18px;animation:blink 1s steps(1) infinite}
+.head::before{content:"> "}
+@keyframes blink{50%{opacity:.35}}
+.barwrap{height:16px;border:1px solid #1d5c35;background:#061410;border-radius:3px;overflow:hidden}
+#bar{height:100%;width:0;background:repeating-linear-gradient(90deg,#2dff7a 0 8px,#0e9e4a 8px 12px);animation:fill 4.4s ease .35s both}
+@keyframes fill{from{width:0}to{width:100%}}
+#pct{position:relative;height:1.3em;margin-top:10px;font-size:26px;font-weight:700}
+#pct span{position:absolute;left:0;top:0;opacity:0}
+#pct span:last-child{animation:appear .01s linear 4.55s forwards}
+#log{margin-top:16px;font-size:clamp(12px,3.4vw,13.5px);line-height:1.9;min-height:min(160px,30vh);color:#7dffae}
+#log .ok{color:#2dff7a}
+#log .warn{color:#ffd23d}
+#log div{opacity:0;animation:fadein .25s ease forwards}
+@keyframes fadein{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+@keyframes appear{from{opacity:0}to{opacity:1}}
+.l1{animation-delay:.55s}.l2{animation-delay:1.15s}.l3{animation-delay:1.75s}
+.l4{animation-delay:2.35s}.l5{animation-delay:2.95s}.l6{animation-delay:3.55s}.l7{animation-delay:4.15s}
+.p1{animation:appear .01s linear .6s forwards,disappear .01s linear 1.2s forwards}
+.p2{animation:appear .01s linear 1.2s forwards,disappear .01s linear 1.8s forwards}
+.p3{animation:appear .01s linear 1.8s forwards,disappear .01s linear 2.4s forwards}
+.p4{animation:appear .01s linear 2.4s forwards,disappear .01s linear 3s forwards}
+.p5{animation:appear .01s linear 3s forwards,disappear .01s linear 3.6s forwards}
+.p6{animation:appear .01s linear 3.6s forwards,disappear .01s linear 4.55s forwards}
+@keyframes disappear{to{opacity:0}}
+#scan{opacity:1;animation:hide .01s linear 4.9s forwards}
+@keyframes hide{to{opacity:0}}
+#boom{background:#0a0000;animation:appear .01s linear 4.9s forwards,hide .01s linear 6.4s forwards}
+.boomtext{font-size:clamp(70px,22vw,220px);font-weight:900;color:#ff2b2b;text-shadow:0 0 60px rgba(255,43,43,.9);animation:shake .09s infinite,flash .4s ease-out}
+@keyframes shake{0%{transform:translate(0,0)}25%{transform:translate(-6px,4px)}50%{transform:translate(5px,-5px)}75%{transform:translate(-4px,-3px)}100%{transform:translate(4px,4px)}}
+@keyframes flash{0%{filter:brightness(4)}100%{filter:brightness(1)}}
+#hack{background:radial-gradient(circle at 50% 40%,#2a0000,#0a0000 70%);text-align:center;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:appear .01s linear 6.4s forwards}
+.glitch{position:relative;font-size:clamp(22px,5.4vw,52px);margin:0;color:#fff;letter-spacing:2px;text-transform:uppercase}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%}
+.glitch::before{color:#ff003c;animation:g1 1.4s infinite linear alternate-reverse;clip-path:inset(0 0 55% 0)}
+.glitch::after{color:#00e5ff;animation:g2 1.1s infinite linear alternate-reverse;clip-path:inset(55% 0 0 0)}
+@keyframes g1{0%{transform:translate(0)}20%{transform:translate(-4px,2px)}40%{transform:translate(3px,-2px)}60%{transform:translate(-3px,-1px)}80%{transform:translate(4px,1px)}100%{transform:translate(-2px,2px)}}
+@keyframes g2{0%{transform:translate(0)}20%{transform:translate(4px,-2px)}40%{transform:translate(-3px,2px)}60%{transform:translate(3px,1px)}80%{transform:translate(-4px,-1px)}100%{transform:translate(2px,-2px)}}
+.sub{font-size:clamp(13px,2.6vw,18px);color:#ff8a8a;margin:14px 0 26px}
+.data{width:min(430px,92vw);margin:0 auto;border:1px solid #6d1414;background:rgba(30,0,0,.7);border-radius:5px;text-align:left;font-size:clamp(13px,3.6vw,14.5px);padding:14px 16px;line-height:1.9;color:#ffb3b3}
+.data b{color:#fff;font-weight:600}
+.data div{opacity:0;animation:fadein .3s ease forwards}
+.d1{animation-delay:6.7s}.d2{animation-delay:7.1s}.d3{animation-delay:7.5s}
+.d4{animation-delay:7.9s}.d5{animation-delay:8.3s}.d6{animation-delay:8.7s}
+.reveal{margin-top:26px;width:min(430px,92vw);border:1px solid #2dff7a;background:rgba(4,30,16,.9);border-radius:6px;padding:16px;color:#cfffde;font-size:13.5px;line-height:1.7;opacity:0;animation:fadein .5s ease 12s forwards}
+.reveal .joke{font-size:17px;color:#2dff7a;font-weight:700;margin:0 0 6px}
+.reveal p{margin:0}
+.reveal .final{margin-top:10px;font-size:12.5px;opacity:.85}
+@media (max-height:520px){.glitch{font-size:clamp(18px,5vw,22px)}.sub{margin:8px 0 12px}.data{padding:10px 12px;line-height:1.55}.reveal{margin-top:14px;padding:12px}#log{min-height:110px}.boomtext{font-size:clamp(50px,16vw,90px)}}
+</style>
+</head>
+<body>
+
+<div id="scan" class="screen">
+  <div class="panel">
+    <div class="head">System-Scan läuft</div>
+    <div class="barwrap"><div id="bar"></div></div>
+    <div id="pct">
+      <span class="p1">14 %</span>
+      <span class="p2">29 %</span>
+      <span class="p3">43 %</span>
+      <span class="p4">57 %</span>
+      <span class="p5">71 %</span>
+      <span class="p6">86 %</span>
+      <span>100 %</span>
+    </div>
+    <div id="log">
+      <div class="l1">&gt; Verbindung zum Gerät wird aufgebaut <span class="ok">[OK]</span></div>
+      <div class="l2">&gt; Gerätetyp wird erkannt <span class="ok">[OK]</span></div>
+      <div class="l3">&gt; Kontakte werden gelesen <span class="ok">[OK]</span></div>
+      <div class="l4">&gt; Fotos und Videos werden kopiert <span class="ok">[OK]</span></div>
+      <div class="l5">&gt; Standort wird ermittelt <span class="warn">[!]</span></div>
+      <div class="l6">&gt; Chats werden entschlüsselt <span class="warn">[!]</span></div>
+      <div class="l7">&gt; Zugriff wird gesichert <span class="warn">[!]</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="boom" class="screen">
+  <div class="boomtext">BOOM</div>
+</div>
+
+<div id="hack" class="screen">
+  <h1 class="glitch" data-text="Your device has been hacked">Your device has been hacked</h1>
+  <p class="sub">and now everyone can see your personal data.</p>
+  <div class="data">
+    <div class="d1"><b>IP address:</b> 185.47.112.203</div>
+    <div class="d2"><b>Location:</b> about 23 km away</div>
+    <div class="d3"><b>Device:</b> iPhone 14 Black</div>
+    <div class="d4"><b>Contacts:</b> 214</div>
+    <div class="d5"><b>Photos:</b> 3.481</div>
+    <div class="d6"><b>Last message:</b> &bdquo;bin gleich da&ldquo;</div>
+  </div>
+  <div class="reveal">
+    <p class="joke">Nur ein Scherz.</p>
+    <p>Dein Gerät ist sicher. Diese Seite läuft komplett offline &ndash; es wurde nichts gelesen, nichts gesendet, nichts gespeichert.</p>
+    <p class="final">Und falls du dir Fotos erhofft hast: Du bekommst keine &ndash; nur diesen Scherz.</p>
+  </div>
+</div>
+
+</body>
+</html>
